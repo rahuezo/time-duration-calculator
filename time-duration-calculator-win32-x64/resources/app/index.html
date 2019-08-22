@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Time Duration Calculator</title>
+    
+    <!-- Bootstrap Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script>let $ = require('jquery');</script>
+    <script>require('popper.js');</script>
+    <script>require('bootstrap');</script>
+  </head>
+  
+  <body>
+    <div class="jumbotron jumbotron-fluid bg-dark text-light mb-2">
+        <div class="container">
+            <h1 class="display-4 text-center" id="duration">0.0 hr</h1>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+      <form id="duration-form">
+        <div class="form-group">
+          <label for="start-time">Start</label>
+          <input type="time" class="form-control" id="start-time" required>
+        </div>
+        <div class="form-group">
+          <label for="end-time">End</label>
+          <input type="time" class="form-control" id="end-time" required>
+        </div>
+        <button type="submit" class="btn btn-outline-danger btn-block my-4">Calculate</button>
+      </form>
+    </div>
+  </body>
+
+  <script>
+      const moment = require('moment');
+
+      $(document).ready(() => {
+        $("#duration-form").submit(function(e) {
+            let start = moment(`2013-02-08 ${$("#start-time").val()}`);
+            let end = moment(`2013-02-08 ${$("#end-time").val()}`);
+
+            console.log(moment.duration(end.diff(start))._milliseconds);
+
+            let duration_ms = moment.duration(end.diff(start))._milliseconds; 
+            let duration_hr = duration_ms / 1000 / 60 / 60;
+            let display = Math.round(10 * duration_hr) / 10; 
+
+            $("#duration").text(`${display.toFixed(1)} hr`);
+            e.preventDefault(); 
+        });
+      });
+  </script>
+</html>
